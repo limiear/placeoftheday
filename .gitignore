@@ -25,6 +25,7 @@ share/
 include/
 bin/
 pip-selfcheck.json
+placeoftheday/*.txt
 
 
 # PyInstaller

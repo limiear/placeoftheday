@@ -1,9 +1,18 @@
 import linecache
+import os
+import gzip
+
 
 def get(placeslot):
-    line = linecache.getline('placeoftheday/worldcitiespop.txt', placeslot)
+    uncompressed = 'placeoftheday/worldcitiespop.txt'
+    if not os.path.isfile(uncompressed):
+        with open(uncompressed, 'rb') as uncom:
+            with gzip.open(uncompressed + '.gz', 'wb') as com:
+                uncom.writelines(com)
+    line = linecache.getline(uncompressed, placeslot)
     columns = line[:-1].split(',')
     return columns
+
 
 def describe(placeslot):
     columns = get(placeslot)
