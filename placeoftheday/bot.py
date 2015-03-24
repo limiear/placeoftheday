@@ -13,6 +13,7 @@ import random
 from StringIO import StringIO
 import itertools
 import shelve
+import json
 
 
 def twython(func):
@@ -45,19 +46,21 @@ class Presenter(object):
 
     def upload_media(self, image):
         with open(image, 'rb') as photo:
-            result = StringIO(photo.read())
-        return result
+            result = self.twitter.upload_media(media=photo)
+            #result = StringIO(photo.read())
+        return result['media_id']
 
     def tweet(self, status, images):
         time.sleep(10)
-        medias = map(lambda i: self.upload_media(i), images)
         params = {'status': status}
         if not images:
             self.twitter.update_status(status=status)
         else:
-            params['media'] = medias
-            self.twitter.post('/statuses/update_with_media',
-                              params=params)
+            medias = map(lambda i: self.upload_media(i), images)
+            params['media_ids'] = medias
+            self.twitter.update_status(**params)
+            #post('/statuses/update_with_media',
+            #              params=params)
         print status, len(status)
 
     @twython

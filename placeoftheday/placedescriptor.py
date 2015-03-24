@@ -6,8 +6,8 @@ import gzip
 def get(placeslot):
     uncompressed = 'placeoftheday/worldcitiespop.txt'
     if not os.path.isfile(uncompressed):
-        with open(uncompressed, 'rb') as uncom:
-            with gzip.open(uncompressed + '.gz', 'wb') as com:
+        with open(uncompressed, 'wb') as uncom:
+            with gzip.open(uncompressed + '.gz', 'rb') as com:
                 uncom.writelines(com)
     line = linecache.getline(uncompressed, placeslot)
     columns = line[:-1].split(',')
