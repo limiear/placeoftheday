@@ -1,6 +1,8 @@
 import linecache
 import os
 import gzip
+import json
+from urllib import urlopen
 
 
 def get(placeslot):
@@ -16,6 +18,8 @@ def get(placeslot):
 
 def describe(placeslot):
     columns = get(placeslot)
-    name = columns[1].title()
+    data = urlopen('http://country.io/names.json')
+    country = json.load(data)[columns[0].upper()]
+    name = '%s, %s' % (columns[1].title(), country)
     latlon = ','.join(columns[-2:])
     return name, latlon

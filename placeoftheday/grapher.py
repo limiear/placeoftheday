@@ -1,12 +1,34 @@
 from datetime import datetime
 from placedescriptor import get
 import urllib
+import urllib2
 import json
 from PIL import Image
 
 
 def download(source, destiny):
-    urllib.urlretrieve(source, destiny)
+    '''Store the url source content to destiny'''
+    result = True
+    try:
+        response = urllib2.urlopen(source)
+        with open(destiny, 'wb') as fo:
+            fo.write(response.read())
+    except Exception, e:
+        result = False
+    return result
+
+
+def aquire_image(images):
+    for image in images:
+        picture = 'picture.%s' % image[-3:]
+        if download(image, picture):
+            im = Image.open(picture)
+            size = im.size
+            ratio = size[1] / float(size[0])
+            im.resize((400, int(400 * ratio)), Image.BILINEAR)
+            im.save(picture)
+            return picture
+    return None
 
 
 def draw(history, latlon, name):
@@ -21,17 +43,12 @@ def draw(history, latlon, name):
     download(city_map, 'sat_map.png')
     result = ['map.png', 'sat_map.png']
     url = ("https://ajax.googleapis.com/ajax/services/search/"
-           "images?v=1.0&q=%s photographs" % name)
-    data = json.load(urllib.urlopen(url))
+           "images?v=1.0&q=%s landscape" % name)
+    req = urllib.urlopen(url)
+    data = json.load(req)
     images = map(lambda r: r['url'], data['responseData']['results'])
     images = filter(lambda f: f[-3:] in ['png', 'jpg', 'gif', 'bmp'], images)
-    if len(images):
-        picture = 'picture.%s' % images[0][-3:]
-        download(images[0], picture)
-        im = Image.open(picture)
-        size = im.size
-        ratio = size[1] / float(size[0])
-        im.resize((400, int(400 * ratio)), Image.BILINEAR)
-        im.save(picture)
+    picture = aquire_image(images)
+    if picture:
         result.append(picture)
     return result
