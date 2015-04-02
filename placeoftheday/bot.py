@@ -53,7 +53,6 @@ class Presenter(object):
     def tweet(self, status, images):
         time.sleep(10)
         params = {'status': status}
-        """
         if not images:
             self.twitter.update_status(status=status)
         else:
@@ -62,7 +61,6 @@ class Presenter(object):
             self.twitter.update_status(**params)
             #post('/statuses/update_with_media',
             #              params=params)
-            """
         print status, len(status)
 
     @twython
