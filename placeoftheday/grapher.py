@@ -43,7 +43,7 @@ def draw(history, latlon, name):
     download(city_map, 'sat_map.png')
     result = ['map.png', 'sat_map.png']
     url = ("https://ajax.googleapis.com/ajax/services/search/"
-           "images?v=1.0&q=%s landscape" % name)
+           "images?v=1.0&q=%s tourism landscape" % name)
     req = urllib.urlopen(url)
     data = json.load(req)
     images = map(lambda r: r['url'], data['responseData']['results'])
