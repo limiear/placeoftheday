@@ -44,6 +44,9 @@ take_bet_run:
 run:
 	$(SOURCE_ACTIVATE) $(PYTHON) placeoftheday/bot.py
 
+followers_run:
+	$(SOURCE_ACTIVATE) $(PYTHON) placeoftheday/followers_bot.py
+
 shell:
 	@ $(SOURCE_ACTIVATE) ipython
 	@ echo "[ shell        ] the system was loaded into an ipython shell"
