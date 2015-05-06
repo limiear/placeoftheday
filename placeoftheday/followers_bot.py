@@ -263,7 +263,8 @@ def wait_and_auto_follow(count, trends):
 
 
 def distribute_follows_into_trends(count, trends):
-    return map(lambda t: wait_and_auto_follow(count=count/len(trends), t), trends)
+    return map(lambda t: wait_and_auto_follow(count=count/len(trends),
+                                              trends=t), trends)
 
 
 def save_followers(amount):
