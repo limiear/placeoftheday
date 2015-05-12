@@ -324,10 +324,11 @@ def strategy():
         print "Mutting followers..."
         auto_mute_following()
     except Exception:
-        t.direct_messages.new(screen_name='ecolell',
-            text='%i new followers (%i).' % (news, len(end)))
-        t.direct_messages.new(screen_name='ecolell',
-            text='HT: %s' % str(selected))
+        pass
+    t.direct_messages.new(screen_name='ecolell',
+        text='%i new followers (%i).' % (news, len(end)))
+    t.direct_messages.new(screen_name='ecolell',
+        text='HT: %s' % str(selected))
 
 
 if __name__ == "__main__":
