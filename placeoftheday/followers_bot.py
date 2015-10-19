@@ -329,7 +329,7 @@ def strategy():
     t.direct_messages.new(screen_name='ecolell',
         text='%i new followers (%i).' % (news, len(end)))
     t.direct_messages.new(screen_name='ecolell',
-        text='HT: %s ... (%i)' % (str(selected)[:125], len(selected))
+        text='HT: %s ... (%i)' % (str(selected)[:125], len(selected)))
 
 
 if __name__ == "__main__":
