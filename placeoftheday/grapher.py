@@ -42,8 +42,8 @@ def draw(history, latlon, name):
                 "&markers=size:mid|color:red|label:P|%s" % (latlon, latlon))
     download(city_map, 'sat_map.png')
     result = ['map.png', 'sat_map.png']
-    url = ("https://api.duckduckgo.com/i.js?l=wt-wt&o=json&"
-           "q=%s tourism landscape&f=")
+    url = ("https://api.duckduckgo.com/i.js?o=json&ia=images&"
+           "q=%s tourism landscape" % name)
     req = urllib.urlopen(url)
     data = json.load(req)
     images = map(lambda r: r['image'], data['results'])
