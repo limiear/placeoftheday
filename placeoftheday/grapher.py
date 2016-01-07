@@ -13,7 +13,7 @@ def download(source, destiny):
         response = urllib2.urlopen(source)
         with open(destiny, 'wb') as fo:
             fo.write(response.read())
-    except Exception, e:
+    except Exception:
         result = False
     return result
 
@@ -32,7 +32,7 @@ def aquire_image(images):
 
 
 def draw(history, latlon, name):
-    columns = get(history.get([datetime.today().date()])[0][1])
+    # columns = get(history.get([datetime.today().date()])[0][1])
     location_map = ("http://maps.googleapis.com/maps/api/staticmap?center=%s"
                     "&zoom=2&size=200x200&maptype=roadmap&sensor=false"
                     "&markers=size:mid|color:red|label:P|%s" % (latlon, latlon))
@@ -42,11 +42,11 @@ def draw(history, latlon, name):
                 "&markers=size:mid|color:red|label:P|%s" % (latlon, latlon))
     download(city_map, 'sat_map.png')
     result = ['map.png', 'sat_map.png']
-    url = ("https://ajax.googleapis.com/ajax/services/search/"
-           "images?v=1.0&q=%s tourism landscape" % name)
+    url = ("https://api.duckduckgo.com/i.js?l=wt-wt&o=json&"
+           "q=%s tourism landscape&f=")
     req = urllib.urlopen(url)
     data = json.load(req)
-    images = map(lambda r: r['url'], data['responseData']['results'])
+    images = map(lambda r: r['image'], data['results'])
     images = filter(lambda f: f[-3:] in ['png', 'jpg', 'gif', 'bmp'], images)
     picture = aquire_image(images)
     if picture:
