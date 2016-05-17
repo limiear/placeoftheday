@@ -50,5 +50,5 @@ def draw(history, latlon, name):
     images = filter(lambda f: f[-3:] in ['png', 'jpg', 'gif', 'bmp'], images)
     picture = aquire_image(images)
     if picture:
-        result.append(picture)
+        result.insert(0, picture)
     return result
